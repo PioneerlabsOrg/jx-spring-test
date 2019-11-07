@@ -5,6 +5,7 @@ pipeline {
   environment {
     ORG = 'pioneerlabsorg'
     APP_NAME = 'jx-spring-test'
+    APP_NAME_BRANCH = "$APP_NAME-$BRANCH_NAME".toLowerCase()
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
     DOCKER_REGISTRY_ORG = 'pioneerlabsorg'
   }
@@ -40,7 +41,7 @@ pipeline {
         container('maven') {
 
           // ensure we're not on a detached head
-          sh "git checkout master"
+          sh "git checkout $BRANCH_NAME"
           sh "git config --global credential.helper store"
           sh "jx step git credentials"
 
@@ -51,7 +52,7 @@ pipeline {
           sh "mvn clean deploy"
           sh "skaffold version"
           sh "export VERSION=`cat VERSION` && skaffold build -f skaffold.yaml"
-          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME:\$(cat VERSION)"
+          sh "jx step post build --image $DOCKER_REGISTRY/$ORG/$APP_NAME_BRANCH:\$(cat VERSION)"
         }
       }
     }
