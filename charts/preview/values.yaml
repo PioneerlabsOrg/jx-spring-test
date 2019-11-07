@@ -17,6 +17,6 @@ cleanup:
 
 preview:
   image:
-    repository:
-    tag:
+    repository: 417179241826.dkr.ecr.eu-west-1.amazonaws.com/pioneerlabsorg/jx-spring-test
+    tag: 0.0.0-SNAPSHOT-PR-01-3
     pullPolicy: IfNotPresent
