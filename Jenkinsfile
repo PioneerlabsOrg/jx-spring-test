@@ -58,7 +58,7 @@ pipeline {
     }
     stage('Promote to Environments') {
       when {
-        branch 'master'
+        anyOf { branch 'master'; branch 'PR-*' }
       }
       steps {
         container('maven') {
