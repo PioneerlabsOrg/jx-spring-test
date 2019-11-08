@@ -35,7 +35,7 @@ pipeline {
     }
     stage('Build Release') {
       when {
-        anyOf { branch 'master'; branch 'PR-*' }
+        anyOf { branch 'master'; }
       }
       steps {
         container('maven') {
@@ -58,7 +58,7 @@ pipeline {
     }
     stage('Promote to Environments') {
       when {
-        anyOf { branch 'master'; branch 'PR-*' }
+        anyOf { branch 'master'; }
       }
       steps {
         container('maven') {
